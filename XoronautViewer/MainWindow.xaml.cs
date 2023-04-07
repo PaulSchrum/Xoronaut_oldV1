@@ -53,6 +53,7 @@ namespace XoronautViewer
         private bool mayShowMouseMoves { get; set; }
         private bool showMouseMoves { get; set; }
         private String testDataDir { get; set; }
+        public double frameRate_fps { get; private set; }
 
         public MainWindow()
         {
@@ -99,11 +100,14 @@ namespace XoronautViewer
             updateGUItextBoxes();
         }
 
+        private double reportedSpeed = 0.0;
         private void updateGUItextBoxes()
         {
+            reportedSpeed = this.viewpointForwardSpeed / this.frameRate_fps;
+            this.txt_speed.Text = $"{reportedSpeed:f2} m/s   {(reportedSpeed*2.23694):f1} mph";
+
             this.txt_xyPlaneAngle.Text = deg(camera.LookDirection.getXZplaneAngle()).ToString();
             this.txt_upAngle.Text = deg(this.camera.LookDirection.getUpAngle()).ToString();
-            this.txt_speed.Text = this.viewpointForwardSpeed.ToString();
             this.txt_positionX.Text = this.camera.Position.X.ToString();
             this.txt_positionY.Text = this.camera.Position.Y.ToString();
             this.txt_positionZ.Text = this.camera.Position.Z.ToString();
@@ -228,8 +232,11 @@ namespace XoronautViewer
         private double xltX = 0; private double xltY = 0; private double xltZ = 0;
         private double rotZ = 0; private double dRotZ = 0.5;
         private Double lightX = -8;
-        private void keepRotatingScreen(object sender, EventArgs e)
-        {  // TRINUG is awesome, right Greg?
+
+        private int oie = 0;
+        private void keepRotatingScreen(Object sender, EventArgs e)
+        {
+            this.frameRate_fps = (sender as DispatcherTimer).Interval.TotalSeconds;
             if (null != aTriangle && false)
             {
                 var xfrm = new Transform3DGroup();
@@ -462,16 +469,9 @@ namespace XoronautViewer
                 else
                     boundingBox.Union(aTicker.TickerGeometryModel3D.Bounds);
             }
-            //this.camera.Position =
-            //    new Point3D(boundingBox.X - 10, camera.Position.Y,
-            //    boundingBox.Z / 2);
             this.camera.Position =
-                new Point3D(0.0 - 10, camera.Position.Y,
+                new Point3D(boundingBox.X - 10, camera.Position.Y,
                 boundingBox.Z / 2);
-            var mdl = this.model;
-            var cntent = this.model.Content;
-            var unknown = mdl.Transform;
-            var mdlXfrom = this.SceneXform;
         }
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -501,7 +501,7 @@ namespace XoronautViewer
         private void processKeyPresses()
         {
             totalCameraMoveVector = new Vector3D(0, 0, 0);
-            Double speedIncrement = 0.01;
+            Double speedIncrement = 0.005;
             Double maxSpeed = 2.0;
             if (keyIsDown[Key.A] == true)
             {
@@ -765,6 +765,7 @@ namespace XoronautViewer
         {
             openSineWaveData();
         }
+
     }
 
     public static class vector3dExtensionMethods
