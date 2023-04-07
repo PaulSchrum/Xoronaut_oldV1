@@ -385,61 +385,7 @@ namespace XoronautViewer
             mDown = false;
         }
 
-        private void openTrafficDataFile()
-        {
-            //var TrafficDataFileReader =
-            //   new TrafficDataFileReader
-            //      (@"C:\SourceModules\DataTicker3D\DataTicker3D\SampleData\Albany_VOL_2009.csv");
-            ////TrafficDataFileReader.RecordingDeviceID = "118261";
-            //TrafficDataFileReader.RecordingDeviceID = "110012";
 
-            //TimeTicker3D aTicker = new TimeTicker3D();
-            //aTicker.Brush = Brushes.Khaki;
-            //aTicker.transform.yExaggeration = 0.005;
-            //aTicker.rawData = TrafficDataFileReader.getData();
-
-            //aTicker.TickerGeometryModel3D.BackMaterial = new DiffuseMaterial(Brushes.YellowGreen);
-            //aTicker.TickerGeometryModel3D.Material = new DiffuseMaterial(Brushes.Tomato);
-            //aTicker.transform.yExaggeration = 0.05;
-            //this.Scene.Children.Add(aTicker.TickerGeometryModel3D);
-
-        }
-
-        private void openLakeDataFile()
-        {
-            //USGS_LakeLevelTxtFileReader =
-            //   new USGS_LakeLevelTxtFileReader
-            //      (@"D:\SourceModules\DataTicker3D\DataTicker3D\SampleData\FallsLakeAndHurricaneFran.txt");
-
-            //TimeTicker3D aTicker = new TimeTicker3D();
-            //aTicker.Brush = Brushes.Khaki;
-            //aTicker.rawData = USGS_LakeLevelTxtFileReader.getData();
-
-            //aTicker.TickerGeometryModel3D.BackMaterial = new DiffuseMaterial(Brushes.YellowGreen);
-            //aTicker.TickerGeometryModel3D.Material = new DiffuseMaterial(Brushes.Tomato);
-            //this.Scene.Children.Add(aTicker.TickerGeometryModel3D);
-
-            //openOtherDataFile();
-        }
-
-        private void openOtherDataFile()
-        {
-            //USGS_LakeLevelTxtFileReader =
-            //   new USGS_LakeLevelTxtFileReader
-            //      (@"D:\SourceModules\DataTicker3D\DataTicker3D\SampleData\JordanLakeAndHurricaneFran.txt");
-
-            //TimeTicker3D aTicker = new TimeTicker3D();
-            //aTicker.Brush = Brushes.DeepSkyBlue;
-            //aTicker.transform.zAdjustment = -5.0;
-            //aTicker.rawData = USGS_LakeLevelTxtFileReader.getData();
-
-            ////ModelVisual3D modelVisual = new ModelVisual3D();
-            ////modelVisual.Content = aTicker.TickerGeometryModel3D;
-            //aTicker.TickerGeometryModel3D.BackMaterial = new DiffuseMaterial(Brushes.YellowGreen);
-            //aTicker.TickerGeometryModel3D.Material = new DiffuseMaterial(Brushes.Tomato);
-            //this.Scene.Children.Add(aTicker.TickerGeometryModel3D);
-            ////this.viewport.UpdateLayout();
-        }
 
         private void openSineWaveData()
         {

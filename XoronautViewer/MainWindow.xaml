@@ -30,14 +30,6 @@
                 <MenuItem x:Name="mnu_openSineWaveData" 
                           InputGestureText="Open Sine Wave Data" Click="mnu_openSineWaveData_Click"
                           />
-                <!--<MenuItem x:Name="mnu_openLakeData" 
-                          InputGestureText="Open Lake Data" Click="mnu_openLakeData_Click" 
-                          IsEnabled="False"
-                          />
-                <MenuItem x:Name="mnu_openTrafficData" 
-                          InputGestureText="Open Traffic Data" Click="mnu_openTrafficData_Click"  
-                          IsEnabled="False"
-                          />-->
                 <MenuItem x:Name="mnu_startMouseTracking" 
                           InputGestureText="Start Mouse Tracking" Click="mnu_startMouseTracking_Click"  
                           />
@@ -108,9 +100,6 @@
                     FarPlaneDistance="500" 
                     NearPlaneDistance="0" 
 					FieldOfView="45" />
-                <!-- LookDirection="0,10,0"
-					UpDirection="0,0,1" 
-                    Position="0,-5,0" -->
             </Viewport3D.Camera>
 
             <ModelVisual3D x:Name="model">
@@ -142,4 +131,3 @@
 
     </Grid>
 </Window>
-<!--"-3273400.0"--> 
