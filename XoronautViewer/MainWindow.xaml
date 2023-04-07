@@ -97,7 +97,7 @@
         <Viewport3D x:Name="viewport" Grid.Row="1" Grid.Column="1" >
             <Viewport3D.Camera>
                 <PerspectiveCamera x:Name="camera" 
-                    FarPlaneDistance="500" 
+                    FarPlaneDistance="10000000" 
                     NearPlaneDistance="0" 
 					FieldOfView="45" />
             </Viewport3D.Camera>
