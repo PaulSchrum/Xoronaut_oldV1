@@ -130,7 +130,7 @@
                             ScaleZ="1.0">
                         </ScaleTransform3D>
                         <TranslateTransform3D
-                            OffsetX="-3273400.0"
+                            OffsetX="0.0"
                             OffsetY="0.0"
                             OffsetZ="0.0"
                             >
