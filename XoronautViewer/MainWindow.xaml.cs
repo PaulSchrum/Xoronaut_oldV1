@@ -19,7 +19,9 @@ using System.Threading;
 using System.Windows.Threading;
 using System.Diagnostics;
 using DataTicker3D;
+using System.Reflection.Metadata;
 
+using Primitives;
 
 namespace XoronautViewer
 {
@@ -415,9 +417,17 @@ namespace XoronautViewer
                 else
                     boundingBox.Union(aTicker.TickerGeometryModel3D.Bounds);
             }
+
+            var v = new PointVisual(new Point3D(12.0, 1.5, 0.0),
+                new DiffuseMaterial(Brushes.Azure),
+                new DiffuseMaterial(Brushes.Green));
+            var tst = v.gm3D.Bounds;
+            this.Scene.Children.Add(v.gm3D);
+
             this.camera.Position =
                 new Point3D(boundingBox.X - 10, camera.Position.Y,
                 boundingBox.Z / 2);
+
         }
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)

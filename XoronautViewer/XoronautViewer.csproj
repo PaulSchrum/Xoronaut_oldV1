@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataTicker3D\DataTicker3D.csproj" />
+    <ProjectReference Include="..\Primitives\Primitives.csproj" />
   </ItemGroup>
 
 </Project>
