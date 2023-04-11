@@ -30,6 +30,8 @@ namespace XoronautViewer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<PrimitiveBase> primitiveObjects = new List<PrimitiveBase>();
+
         private GeometryModel3D aTriangle = null;
         private GeometryModel3D mGeometry;
         private bool mDown;
@@ -389,44 +391,21 @@ namespace XoronautViewer
 
 
 
-        private void openSineWaveData()
+        private void generateSampleData()
         {
-            if (!System.IO.Directory.Exists(this.testDataDir))
-                return;
-
-            var testDataFile = System.IO.Path.GetFullPath(System.IO.Path.Combine(this.testDataDir, "SineAndCosine.csv"));
-            if (!System.IO.File.Exists(testDataFile))
-                return;
-
-            var zAdjust = 0.0;
-            trigFunctionCsv = new TrigFunctionsCsv(testDataFile);
-            var allData = trigFunctionCsv.getDataList();
-            Rect3D boundingBox = default;
-            foreach (var aDataSet in allData)
-            {  // Note: when ready to xform the incoming data, do it here as worldDataTransform.
-                var aTicker = new TimeTicker3D(); 
-                aTicker.Brush = Brushes.DeepSkyBlue;
-                aTicker.transform.zAdjustment = zAdjust;
-                aTicker.rawData = aDataSet;
-                aTicker.TickerGeometryModel3D.BackMaterial = new DiffuseMaterial(Brushes.YellowGreen);
-                aTicker.TickerGeometryModel3D.Material = new DiffuseMaterial(Brushes.Tomato);
-                this.Scene.Children.Add(aTicker.TickerGeometryModel3D);
-                zAdjust -= 5.0;
-                if (boundingBox.Equals(default(Rect3D)))
-                    boundingBox = aTicker.TickerGeometryModel3D.Bounds;
-                else
-                    boundingBox.Union(aTicker.TickerGeometryModel3D.Bounds);
-            }
-
-            var v = new PointVisual(new Point3D(12.0, 1.5, 0.0),
-                new DiffuseMaterial(Brushes.Azure),
-                new DiffuseMaterial(Brushes.Green));
-            var tst = v.gm3D.Bounds;
-            this.Scene.Children.Add(v.gm3D);
+            this.primitiveObjects.AddPrimitive(this.Scene,
+                new PointVisual(new Point3D(0.0, 0.0, 0.0),
+                new DiffuseMaterial(Brushes.Blue)));
+            this.primitiveObjects.AddPrimitive(this.Scene,
+                new PointVisual(new Point3D(2.0, 1.0, 2.0),
+                new DiffuseMaterial(Brushes.White)));
+            this.primitiveObjects.AddPrimitive(this.Scene,
+                new PointVisual(new Point3D(4.0, -4.0, 1.25),
+                new DiffuseMaterial(Brushes.Yellow)));
+            //this.Scene.Children.Add(v.gm3D);
 
             this.camera.Position =
-                new Point3D(boundingBox.X - 10, camera.Position.Y,
-                boundingBox.Z / 2);
+                new Point3D(-10.0, +2.0, 0.0);
 
         }
 
@@ -717,9 +696,9 @@ namespace XoronautViewer
             this.txt_mouseY.Text = (this.viewport.ActualHeight / 2.0 - pos.Y).ToString();
         }
 
-        private void mnu_openSineWaveData_Click(object sender, RoutedEventArgs e)
+        private void mnu_generateSampleData_Click(object sender, RoutedEventArgs e)
         {
-            openSineWaveData();
+            generateSampleData();
         }
 
     }

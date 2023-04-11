@@ -28,7 +28,7 @@
                           InputGestureText="Clear Visualized Data" Click="mnu_clearVisualizedData_Click" 
                           />
                 <MenuItem x:Name="mnu_openSineWaveData" 
-                          InputGestureText="Open Sine Wave Data" Click="mnu_openSineWaveData_Click"
+                          InputGestureText="Generate Sample Points" Click="mnu_generateSampleData_Click"
                           />
                 <MenuItem x:Name="mnu_startMouseTracking" 
                           InputGestureText="Start Mouse Tracking" Click="mnu_startMouseTracking_Click"  
