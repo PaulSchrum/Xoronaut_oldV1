@@ -97,7 +97,7 @@ namespace XoronautViewer
             startMousePosition = new Point(0, 0);
             mouseDownCount = 0;
             dispatcherTimer.Interval = TimeSpan.FromSeconds(1.0/60.0);
-            dispatcherTimer.Tick += keepRotatingScreen;
+            dispatcherTimer.Tick += UpdateTimeStep;
             dispatcherTimer.Start();
 
             //makeAtestObject();
@@ -238,7 +238,7 @@ namespace XoronautViewer
         private Double lightX = -8;
 
         private int oie = 0;
-        private void keepRotatingScreen(Object sender, EventArgs e)
+        private void UpdateTimeStep(Object sender, EventArgs e)
         {
             this.frameRate_fps = (sender as DispatcherTimer).Interval.TotalSeconds;
             processElements(frameRate_fps);
