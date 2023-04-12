@@ -241,7 +241,7 @@ namespace XoronautViewer
         private void keepRotatingScreen(Object sender, EventArgs e)
         {
             this.frameRate_fps = (sender as DispatcherTimer).Interval.TotalSeconds;
-            processElements();
+            processElements(frameRate_fps);
             if (null != aTriangle && false)
             {
                 var xfrm = new Transform3DGroup();
@@ -278,11 +278,12 @@ namespace XoronautViewer
         }
 
         private int ct = 0;
-        private void processElements()
+        private void processElements(double timeDelta)
         {
             if(this.primitiveObjects is null ||  this.primitiveObjects.Count == 0) return;
-            Transform3D xfrm = new TranslateTransform3D(new Vector3D(00.05, 0.01, 0.02));
-            this.primitiveObjects.Last().Transform(xfrm);
+
+            this.primitiveObjects.First().setVelocity(0.5, -0.25, -1, timeDelta);
+            this.primitiveObjects.Last().setVelocity(1, 1, 1, timeDelta);
             //lbl_speed.Content = $"{ ct++}";
 
         }
