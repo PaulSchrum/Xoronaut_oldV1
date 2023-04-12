@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Media.Media3D;
 
@@ -29,5 +30,13 @@ namespace Primitives
 
         protected abstract void MakeMesh(Point3D pt3);
 
+        public void Transform(Transform3D xfrm)
+        {
+            // code provided by (inspired by) Chat-GPT on 12 April 2023
+            Transform3DGroup transformGroup = gm3D.Transform as Transform3DGroup;
+            if (transformGroup is null) { gm3D.Transform = new Transform3DGroup(); }
+            (gm3D.Transform as Transform3DGroup).Children.Add(xfrm);
+
+        }
     }
 }

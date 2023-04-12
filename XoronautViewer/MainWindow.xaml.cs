@@ -241,6 +241,7 @@ namespace XoronautViewer
         private void keepRotatingScreen(Object sender, EventArgs e)
         {
             this.frameRate_fps = (sender as DispatcherTimer).Interval.TotalSeconds;
+            processElements();
             if (null != aTriangle && false)
             {
                 var xfrm = new Transform3DGroup();
@@ -274,6 +275,15 @@ namespace XoronautViewer
             }
             processMouseNavigation(true);
             //Debug.Print(". Now it is down.");
+        }
+
+        private int ct = 0;
+        private void processElements()
+        {
+            if(this.primitiveObjects is null ||  this.primitiveObjects.Count == 0) return;
+            Transform3D xfrm = new TranslateTransform3D(new Vector3D(00.05, 0.01, 0.02));
+            this.primitiveObjects.Last().Transform(xfrm);
+            lbl_speed.Content = $"{ ct++}";
 
         }
 
@@ -399,10 +409,14 @@ namespace XoronautViewer
             this.primitiveObjects.AddPrimitive(this.Scene,
                 new PointVisual(new Point3D(2.0, 1.0, 2.0),
                 new DiffuseMaterial(Brushes.White), new DiffuseMaterial(Brushes.Red)));
+
+            var lastPointAdded = 
             this.primitiveObjects.AddPrimitive(this.Scene,
                 new PointVisual(new Point3D(4.0, +0.5, 1.25),
                 new DiffuseMaterial(Brushes.Yellow), new DiffuseMaterial(Brushes.Red)));
-            //this.Scene.Children.Add(v.gm3D);
+
+            Transform3D xfrm = new TranslateTransform3D(new Vector3D(0, 1.5, 3.0));
+            lastPointAdded.Transform(xfrm);
 
             this.camera.Position =
                 new Point3D(-10.0, +2.0, 0.0);
