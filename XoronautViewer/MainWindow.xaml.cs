@@ -52,7 +52,7 @@ namespace XoronautViewer
         private Vector3D totalCameraMoveVector { get; set; }
         private bool printDiagnostics { get; set; }
         Double upAngle = 0.0;
-        Double pivotDistance = 37.5;
+        Double pivotDistance = 10.5;
         Double pivotRate = 0.5;  // Degrees per second
         private bool mayShowMouseMoves { get; set; }
         private bool showMouseMoves { get; set; }
@@ -137,8 +137,8 @@ namespace XoronautViewer
             keyIsDown.Add(System.Windows.Input.Key.NumPad2, false);  // slew Down (-Y, world Z)
             keyIsDown.Add(System.Windows.Input.Key.Divide, false);  // slew Left (+Z, world Y)
             keyIsDown.Add(System.Windows.Input.Key.NumPad0, false);   // slew Right (-Z, world Y)
-            keyIsDown.Add(System.Windows.Input.Key.NumPad1, false);  // pivot view clockwise
-            keyIsDown.Add(System.Windows.Input.Key.NumPad3, false);  // pivot view counterclockwise
+            keyIsDown.Add(System.Windows.Input.Key.NumPad1, false);  // orbit view clockwise
+            keyIsDown.Add(System.Windows.Input.Key.NumPad3, false);  // orbit view counterclockwise
             keyIsDown.Add(System.Windows.Input.Key.LeftShift, false);  // pivot view counterclockwise
             keyIsDown.Add(System.Windows.Input.Key.RightShift, false);  // pivot view counterclockwise
 
@@ -395,13 +395,13 @@ namespace XoronautViewer
         {
             this.primitiveObjects.AddPrimitive(this.Scene,
                 new PointVisual(new Point3D(0.0, 0.0, 0.0),
-                new DiffuseMaterial(Brushes.Blue)));
+                new DiffuseMaterial(Brushes.Blue), new DiffuseMaterial(Brushes.Red)));
             this.primitiveObjects.AddPrimitive(this.Scene,
                 new PointVisual(new Point3D(2.0, 1.0, 2.0),
-                new DiffuseMaterial(Brushes.White)));
+                new DiffuseMaterial(Brushes.White), new DiffuseMaterial(Brushes.Red)));
             this.primitiveObjects.AddPrimitive(this.Scene,
-                new PointVisual(new Point3D(4.0, -4.0, 1.25),
-                new DiffuseMaterial(Brushes.Yellow)));
+                new PointVisual(new Point3D(4.0, +0.5, 1.25),
+                new DiffuseMaterial(Brushes.Yellow), new DiffuseMaterial(Brushes.Red)));
             //this.Scene.Children.Add(v.gm3D);
 
             this.camera.Position =
