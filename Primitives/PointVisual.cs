@@ -44,7 +44,7 @@ namespace Primitives
 
             mesh.TriangleIndices.Add(0);
             mesh.TriangleIndices.Add(1);
-            mesh.TriangleIndices.Add(2);  // 8:00
+            mesh.TriangleIndices.Add(2);
 
             mesh.TriangleIndices.Add(0);
             mesh.TriangleIndices.Add(2);
