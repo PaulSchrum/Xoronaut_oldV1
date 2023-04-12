@@ -283,7 +283,7 @@ namespace XoronautViewer
             if(this.primitiveObjects is null ||  this.primitiveObjects.Count == 0) return;
             Transform3D xfrm = new TranslateTransform3D(new Vector3D(00.05, 0.01, 0.02));
             this.primitiveObjects.Last().Transform(xfrm);
-            lbl_speed.Content = $"{ ct++}";
+            //lbl_speed.Content = $"{ ct++}";
 
         }
 
