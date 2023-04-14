@@ -22,6 +22,7 @@ using DataTicker3D;
 using System.Reflection.Metadata;
 
 using Primitives;
+using System.Security.Cryptography.Xml;
 
 namespace XoronautViewer
 {
@@ -277,14 +278,36 @@ namespace XoronautViewer
             //Debug.Print(". Now it is down.");
         }
 
-        private int ct = 0;
+        private void vortexEquation(PrimitiveBase anObject, out double dx, out double dy, out double dz)
+        {
+            var centerPt = anObject.anchorPt;
+            double HordistToCenter = Math.Sqrt(centerPt.X * centerPt.X + centerPt.Z * centerPt.Z);
+            dy = 50 / HordistToCenter;
+            if(HordistToCenter > 20) dy = 0;
+
+            double radialSpeed = -10 / HordistToCenter;
+            double angluarSpeed = -10 / HordistToCenter;
+            double angleToCenter = Math.Atan2(centerPt.Z, centerPt.X);
+            double newRadius = HordistToCenter + radialSpeed;
+            double newAngle = angleToCenter + angluarSpeed;
+            double newX = newRadius * Math.Cos(newAngle);
+            double newZ = newRadius * Math.Sin(newAngle);
+            dx = newX - centerPt.X;
+            dz = newZ - centerPt.Z;
+        }
+
+        private double delx = 0.0; private double dely = 0.0; private double delz = 0.0;
         private void processElements(double timeDelta)
         {
-            if(this.primitiveObjects is null ||  this.primitiveObjects.Count == 0) return;
+            if (this.primitiveObjects is null ||  this.primitiveObjects.Count == 0) return;
 
-            this.primitiveObjects.First().setVelocity(0.5, -0.25, -1, timeDelta);
-            this.primitiveObjects.Last().setVelocity(1, 1, 1, timeDelta);
-            //lbl_speed.Content = $"{ ct++}";
+            lbl_speed.Content = $"{(1 / timeDelta):f2} fps";
+
+            foreach(var obj in this.primitiveObjects)
+            {
+                vortexEquation(obj, out delx, out dely, out delz);
+                obj.MoveBy(new Vector3D(delx, dely, delz), timeDelta);
+            }
 
         }
 
@@ -401,26 +424,67 @@ namespace XoronautViewer
         }
 
 
+        private void createManyPoints(int numberOfPoint)
+        {
+            double radius = 100.0;
+            double thickness = 5.0;
+
+            double angleRad = 0.0;
+            double radiusInstance = 0.0;
+            double height = 0.0;
+
+            double x = 0.0; double y = 0.0; double z = 0.0;
+
+            Random random = new Random();
+            for (int i = 0; i < numberOfPoint; i++) 
+            { 
+                angleRad = random.NextDouble() * 2 * Math.PI;
+                radiusInstance = Math.Sqrt(random.NextDouble()) * radius;
+                height = random.NextDouble() * 10.0;
+
+                x = radiusInstance * Math.Cos(angleRad);
+                z = radiusInstance * Math.Sin(angleRad);
+                y = height;
+
+                try
+                {
+                    this.primitiveObjects.AddPrimitive(this.Scene,
+                    new PointVisual(new Point3D(x, y, z),
+                    new DiffuseMaterial(Brushes.Yellow),
+                    new DiffuseMaterial(Brushes.Red)));
+
+                    lbl_speed.Content = $"{i++}";
+
+                }
+                catch (Exception e)
+                {
+                    lbl_speed.Content =$"Overflow: {i} pts.";
+                    break;
+                }            
+            }
+        }
 
         private void generateSampleData()
         {
-            this.primitiveObjects.AddPrimitive(this.Scene,
-                new PointVisual(new Point3D(0.0, 0.0, 0.0),
-                new DiffuseMaterial(Brushes.Blue), new DiffuseMaterial(Brushes.Red)));
-            this.primitiveObjects.AddPrimitive(this.Scene,
-                new PointVisual(new Point3D(2.0, 1.0, 2.0),
-                new DiffuseMaterial(Brushes.White), new DiffuseMaterial(Brushes.Red)));
+            //this.primitiveObjects.AddPrimitive(this.Scene,
+            //    new PointVisual(new Point3D(0.0, 0.0, 0.0),
+            //    new DiffuseMaterial(Brushes.Blue), new DiffuseMaterial(Brushes.Red)));
+            //this.primitiveObjects.AddPrimitive(this.Scene,
+            //    new PointVisual(new Point3D(2.0, 1.0, 2.0),
+            //    new DiffuseMaterial(Brushes.White), new DiffuseMaterial(Brushes.Red)));
 
-            var lastPointAdded = 
-            this.primitiveObjects.AddPrimitive(this.Scene,
-                new PointVisual(new Point3D(4.0, +0.5, 1.25),
-                new DiffuseMaterial(Brushes.Yellow), new DiffuseMaterial(Brushes.Red)));
+            //var lastPointAdded =
+            //this.primitiveObjects.AddPrimitive(this.Scene,
+            //    new PointVisual(new Point3D(4.0, +0.5, 1.25),
+            //    new DiffuseMaterial(Brushes.Yellow), new DiffuseMaterial(Brushes.Red)));
 
-            Transform3D xfrm = new TranslateTransform3D(new Vector3D(0, 1.5, 3.0));
-            lastPointAdded.Transform(xfrm);
+            //Transform3D xfrm = new TranslateTransform3D(new Vector3D(0, 1.5, 3.0));
+            //lastPointAdded.Transform(xfrm);
+
+            createManyPoints(5_000);
 
             this.camera.Position =
-                new Point3D(-10.0, +2.0, 0.0);
+                new Point3D(-250.0, +35.0, 0.0);
 
         }
 

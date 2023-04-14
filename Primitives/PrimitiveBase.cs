@@ -9,7 +9,28 @@ namespace Primitives
 {
     internal abstract class PrimitiveBase
     {
-        public Point3D anchorPt { get; private set; }
+        private Point3D anchorPt_ = default(Point3D);
+        public Point3D anchorPt 
+        { 
+            get
+            {
+                if (gm3D is null || gm3D.Geometry is null)
+                {
+                    return anchorPt_;
+                }
+                var pos0 = (this.gm3D.Geometry as MeshGeometry3D).Positions[0];
+                return this.gm3D.Transform.Transform(pos0);
+            }
+            private set
+            {
+                if (gm3D is null || gm3D.Geometry is null)
+                    anchorPt_ = value;
+                else
+                {
+                    MoveTo(value);
+                }
+            }
+        }
         internal MeshGeometry3D mesh { get; private set; } = null;
         internal Material material { get; private set; } = default;
         internal Material backMaterial { get; private set; } = default;
@@ -26,10 +47,15 @@ namespace Primitives
             }
         }
 
+        // Todo: Implement these next three.
+        //public Vector3D velocity { get; private set; } = new Vector3D(0, 0, 0);
+        //private Quaternion rotation { get; /* private */ set; } = new Quaternion(0, 0, 0, 0);
+        //public Vector3D acceleration { get; private set; } = new Vector3D(0, 0, 0);
+
         protected PrimitiveBase(Point3D point3D, Material material = default, 
             Material backMaterial = default)
         {
-            this.anchorPt = point3D;
+            this.anchorPt_ = point3D;
             this.mesh = new MeshGeometry3D();
             MakeMesh(point3D);
             this.material = material;
@@ -43,28 +69,36 @@ namespace Primitives
 
         protected abstract void MakeMesh(Point3D pt3);
 
-        public void Transform(Transform3D xfrm)
+        public void MoveTo(Point3D newPosition)
         {
-            // code provided by (inspired by) Chat-GPT on 12 April 2023
-            objectTransform.Children.Add(xfrm);
-            gm3D.Transform = objectTransform;
+            // Calculate the translation vector required to move to the new position
+            Vector3D translation = newPosition - anchorPt_;
+
+            // Create a new transform to apply the translation
+            TranslateTransform3D translateTransform = new TranslateTransform3D(translation);
+
+            // If the existing transform already has a TranslateTransform3D, replace it with the new one
+            // Otherwise, add the new transform to the existing transform
+            var existingTranslateTransform = objectTransform.Children.OfType<TranslateTransform3D>().FirstOrDefault();
+            if (existingTranslateTransform != null)
+            {
+                int index = objectTransform.Children.IndexOf(existingTranslateTransform);
+                objectTransform.Children[index] = translateTransform;
+            }
+            else
+            {
+                objectTransform.Children.Add(translateTransform);
+            }
         }
 
-        public void setVelocity(double velocityX, double velocityY, double velocityZ, double timeDeltaSeconds)
-        {  // Function corrected for me by Chat-GPT.
+        public void MoveBy(Vector3D deltaPositions)
+        {
+            MoveTo(anchorPt + deltaPositions);
+        }
 
-            // Get the existing TranslateTransform3D from the Transform3DGroup, or create a new one if it doesn't exist
-            TranslateTransform3D translation = objectTransform.Children.OfType<TranslateTransform3D>().FirstOrDefault();
-            if (translation == null)
-            {
-                translation = new TranslateTransform3D();
-                objectTransform.Children.Add(translation);
-            }
-
-            // Set the x, y, and z translations based on the velocity and time delta
-            translation.OffsetX += velocityX * timeDeltaSeconds;
-            translation.OffsetY += velocityY * timeDeltaSeconds;
-            translation.OffsetZ += velocityZ * timeDeltaSeconds;
+        public void MoveBy(Vector3D velocityVector_ups, double timeDeltaSeconds)
+        {
+            MoveBy(velocityVector_ups * timeDeltaSeconds);
         }
     }
 }

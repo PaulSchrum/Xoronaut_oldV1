@@ -26,6 +26,7 @@ namespace Primitives
         {
         }
 
+        double pyramidHeight = 0.35;
         /// <summary>
         /// For the given primitive type, create the mesh geometry.
         /// </summary>
@@ -33,13 +34,13 @@ namespace Primitives
         /// <returns></returns>
         protected override void MakeMesh(Point3D pt3)
         {
-            var aPt = new Point3D(pt3.X, pt3.Y, pt3.Z+0.2);
+            var aPt = new Point3D(pt3.X, pt3.Y, pt3.Z);
             mesh.Positions.Add(aPt);
-            aPt = new Point3D(pt3.X + 0.1, pt3.Y, pt3.Z - 0.15);
+            aPt = new Point3D(pt3.X + 0.1, pt3.Y, pt3.Z - pyramidHeight);
             mesh.Positions.Add(aPt);
-            aPt = new Point3D(pt3.X - 0.15, pt3.Y + 0.15, pt3.Z - 0.15);
+            aPt = new Point3D(pt3.X - 0.15, pt3.Y + 0.15, pt3.Z - pyramidHeight);
             mesh.Positions.Add(aPt);
-            aPt = new Point3D(pt3.X - 0.15, pt3.Y - 0.15, pt3.Z - 0.15);
+            aPt = new Point3D(pt3.X - 0.15, pt3.Y - 0.15, pt3.Z - pyramidHeight);
             mesh.Positions.Add(aPt);
 
             mesh.TriangleIndices.Add(0);
