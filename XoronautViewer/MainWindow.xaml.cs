@@ -74,10 +74,10 @@ namespace XoronautViewer
             viewpointUpAngleRotationSpeed = 0.005;
             hydrateKeyIsDownDictionary();
             //this.camera.Position = new Point3D(-.5, 2.5, 8);
-            this.camera.Position = new Point3D(-18.0,3, 0);
+            this.camera.Position = new Point3D(-18.0,2, 0);
             this.camera.FieldOfView = 55;
             //this.camera.LookDirection = new Vector3D(-10, -15, -35);
-            this.camera.LookDirection = new Vector3D(1, -0.05, 0);
+            this.camera.LookDirection = new Vector3D(1, -1.05, 0);
             this.upAngle = this.camera.LookDirection.getUpAngle();
             this.camera.UpDirection = new Vector3D(0, 1, 0);
             cameraOriginalPosition = new Point3D(this.camera.Position.X,
@@ -484,7 +484,8 @@ namespace XoronautViewer
             createManyPoints(5_000);
 
             this.camera.Position =
-                new Point3D(-250.0, +35.0, 0.0);
+                new Point3D(0.0, -20.0, 0.0);
+            this.camera.LookDirection = new Vector3D(0.05, 1.0, 0.0);
 
         }
 
