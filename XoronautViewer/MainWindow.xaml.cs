@@ -466,26 +466,21 @@ namespace XoronautViewer
 
         private void generateSampleData()
         {
-            //this.primitiveObjects.AddPrimitive(this.Scene,
-            //    new PointVisual(new Point3D(0.0, 0.0, 0.0),
-            //    new DiffuseMaterial(Brushes.Blue), new DiffuseMaterial(Brushes.Red)));
-            //this.primitiveObjects.AddPrimitive(this.Scene,
-            //    new PointVisual(new Point3D(2.0, 1.0, 2.0),
-            //    new DiffuseMaterial(Brushes.White), new DiffuseMaterial(Brushes.Red)));
-
-            //var lastPointAdded =
-            //this.primitiveObjects.AddPrimitive(this.Scene,
-            //    new PointVisual(new Point3D(4.0, +0.5, 1.25),
-            //    new DiffuseMaterial(Brushes.Yellow), new DiffuseMaterial(Brushes.Red)));
-
-            //Transform3D xfrm = new TranslateTransform3D(new Vector3D(0, 1.5, 3.0));
-            //lastPointAdded.Transform(xfrm);
-
             createManyPoints(5_000);
 
-            this.camera.Position =
-                new Point3D(0.0, -20.0, 0.0);
-            this.camera.LookDirection = new Vector3D(0.05, 1.0, 0.0);
+            bool lookStraightUp = false;
+            if (lookStraightUp == true)
+            {
+                this.camera.Position =
+                    new Point3D(0.0, -20.0, 0.0);
+                this.camera.LookDirection = new Vector3D(0.05, 1.0, 0.0);
+            }
+            else
+            {
+                this.camera.Position =
+                    new Point3D(-180.0, 20.0, 0.0);
+                this.camera.LookDirection = new Vector3D(1, -0.07, 0.0);
+            }
 
         }
 
