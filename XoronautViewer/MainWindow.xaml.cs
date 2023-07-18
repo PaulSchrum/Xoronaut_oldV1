@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 using System.Windows.Media.Media3D;
 using System.Media;
@@ -296,12 +297,19 @@ namespace XoronautViewer
             dz = newZ - centerPt.Z;
         }
 
+        private int counter = 0;
         private double delx = 0.0; private double dely = 0.0; private double delz = 0.0;
         private void processElements(double timeDelta)
         {
             if (this.primitiveObjects is null ||  this.primitiveObjects.Count == 0) return;
 
-            lbl_speed.Content = $"{(1 / timeDelta):f2} fps";
+            counter++;
+            if(counter == 1)
+            {
+                Thread.Sleep(3000);
+            }
+            counter = 2;
+            txt_mouseX.Text = $"{(1 / timeDelta):f2} fps";
 
             foreach(var obj in this.primitiveObjects)
             {
@@ -449,9 +457,9 @@ namespace XoronautViewer
                 try
                 {
                     this.primitiveObjects.AddPrimitive(this.Scene,
-                    new PointVisual(new Point3D(x, y, z),
-                    new DiffuseMaterial(Brushes.Yellow),
-                    new DiffuseMaterial(Brushes.Red)));
+                        new PointVisual(new Point3D(x, y, z),
+                        new DiffuseMaterial(Brushes.Yellow),
+                        new DiffuseMaterial(Brushes.Red)));
 
                     lbl_speed.Content = $"{i++}";
 
@@ -466,7 +474,11 @@ namespace XoronautViewer
 
         private void generateSampleData()
         {
+            // var stopwatch = Stopwatch.StartNew();
             createManyPoints(5_000);
+            //stopwatch.Stop();
+            //this.lbl_pos.Content =
+            //    $"{stopwatch.Elapsed.TotalSeconds:F4} sec.";
 
             bool lookStraightUp = false;
             if (lookStraightUp == true)

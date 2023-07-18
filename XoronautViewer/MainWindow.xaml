@@ -60,7 +60,7 @@
 
             <GroupBox Margin="0,4,0,0" Header="Position" >
                 <StackPanel>
-                    <Label Content="Position:" />
+                    <Label x:Name="lbl_pos" Content="Position:" />
                     <Label Content="X:" />
                     <TextBox x:Name="txt_positionX" />
                     <Label Content="Y:" />
